@@ -39,6 +39,23 @@ class LoginPage {
 
 #### 2.2 Data-Driven Testing
 ```python
+class EmailValidator:
+    def __init__(self):
+        self.email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    
+    def is_valid(self, email: str) -> bool:
+        """
+        Validates email format using regex pattern
+        Args:
+            email: String to validate
+        Returns:
+            bool: True if email is valid, False otherwise
+        """
+        if not email:
+            return False
+        import re
+        return bool(re.match(self.email_pattern, email))
+
 @pytest.mark.parametrize("input,expected", [
     ("test@email.com", True),
     ("invalid-email", False),
@@ -50,7 +67,8 @@ def test_email_validation(input, expected):
 ```
 
 #### 2.3 Factory Pattern
-```typescript
+
+// TestDataFactory creates different types of test users with predefined configurations
 interface UserData {
     username: string;
     password: string;
@@ -58,12 +76,15 @@ interface UserData {
 }
 
 class TestDataFactory {
+    // Creates test users with different roles and permissions
     static createTestUser(type: 'admin' | 'regular'): UserData {
+        // Base user configuration
         const baseUser = {
             username: 'test@example.com',
             password: 'Test123!'
         };
         
+        // Return different user types based on the requested type
         switch(type) {
             case 'admin':
                 return { ...baseUser, role: 'ADMIN' };
@@ -71,8 +92,61 @@ class TestDataFactory {
                 return { ...baseUser, role: 'USER' };
         }
     }
+
+    // Example usage:
+    // const adminUser = TestDataFactory.createTestUser('admin');
+    // const regularUser = TestDataFactory.createTestUser('regular');
 }
-```
+
+// Another example: Test Data Factory for different test environments
+class TestEnvironmentFactory {
+    static createConfig(env: 'dev' | 'staging' | 'prod') {
+        const baseConfig = {
+            timeout: 5000,
+            retries: 3
+        };
+
+        switch(env) {
+            case 'dev':
+                return {
+                    ...baseConfig,
+                    baseUrl: 'http://dev.example.com',
+                    logLevel: 'debug'
+                };
+            case 'staging':
+                return {
+                    ...baseConfig,
+                    baseUrl: 'http://staging.example.com',
+                    logLevel: 'info'
+                };
+            case 'prod':
+                return {
+                    ...baseConfig,
+                    baseUrl: 'http://example.com',
+                    logLevel: 'error'
+                };
+        }
+    }
+
+    // Example usage:
+    // const devConfig = TestEnvironmentFactory.createConfig('dev');
+    // const prodConfig = TestEnvironmentFactory.createConfig('prod');
+}
+
+// Example of using Factory Pattern in tests:
+describe('User Authentication', () => {
+    it('should allow admin access', async () => {
+        const adminUser = TestDataFactory.createTestUser('admin');
+        const result = await loginAs(adminUser);
+        expect(result.hasAdminAccess).toBe(true);
+    });
+
+    it('should restrict regular user access', async () => {
+        const regularUser = TestDataFactory.createTestUser('regular');
+        const result = await loginAs(regularUser);
+        expect(result.hasAdminAccess).toBe(false);
+    });
+});
 
 ### 3. Testing Types
 - Functional Testing
@@ -240,77 +314,7 @@ class TestCaseBuilder {
 }
 ```
 
-## Best Practices
-1. Choose the right automation tool
-2. Create maintainable test cases
-3. Follow naming conventions
-4. Implement proper error handling
-5. Write clean, readable code
-
-## Test Automation Pyramid
-1. Unit Tests (Base)
-   - Fast execution
-   - Tests individual components
-   - Example: Testing a login validation function
-
-2. Integration Tests (Middle)
-   - Tests component interactions
-   - API testing
-   - Database interactions
-
-3. UI/E2E Tests (Top)
-   - Full user journey tests
-   - Cross-browser testing
-   - Performance testing
-
-## Test Design Patterns
-
-### Page Object Model
-```javascript
-class LoginPage {
-    constructor() {
-        this.usernameField = '#username';
-        this.passwordField = '#password';
-        this.loginButton = '#login-btn';
-    }
-
-    async login(username, password) {
-        await this.enterUsername(username);
-        await this.enterPassword(password);
-        await this.clickLogin();
-    }
-}
-```
-
-### Data-Driven Testing
-```python
-@pytest.mark.parametrize("username,password,expected", [
-    ("valid_user", "valid_pass", True),
-    ("invalid_user", "invalid_pass", False),
-    ("", "", False)
-])
-def test_login(username, password, expected):
-    result = login_function(username, password)
-    assert result == expected
-```
-
-## Test Framework Components
-1. Test Runner
-   - Jest, Pytest, TestNG
-   - Configuration
-   - Parallel execution
-
-2. Reporting
-   - Allure Reports
-   - Custom HTML reports
-   - CI/CD integration
-
-3. Test Data Management
-   - External data files
-   - Database fixtures
-   - API mocking
-
-## Debugging Tips
+### Debugging Tips
 1. Logging
 ```python
 import logging
