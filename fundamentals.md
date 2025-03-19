@@ -161,6 +161,7 @@ describe('User Authentication', () => {
 
 ### 1. Programming Fundamentals
 #### 1.1 JavaScript/TypeScript
+[View Examples](../examples/javascript/)
 ```typescript
 // Basic Concepts
 interface TestCase {
@@ -180,6 +181,7 @@ class TestRunner {
 ```
 
 #### 1.2 Python
+[View Examples](../examples/python/)
 ```python
 # Basic Concepts
 class TestCase:
@@ -230,6 +232,7 @@ git push origin feature/new-tests
 ```
 
 ### 4. API Knowledge
+[View Examples](../examples/api-testing/)
 ```javascript
 // REST API Testing
 async function apiTest() {
@@ -252,6 +255,7 @@ async function apiTest() {
 ```
 
 ### 5. DevOps Basics
+[View Examples](../examples/devops/)
 ```yaml
 # Basic CI/CD Pipeline
 name: Test Automation
@@ -269,13 +273,15 @@ jobs:
 ```
 
 ### 6. Testing Tools
-- Test Runners (Jest, Pytest, Mocha)
-- Assertion Libraries (Chai, Assert)
-- Mocking Frameworks (Sinon, Jest Mock)
-- Browser Automation (Selenium, Puppeteer)
-- API Testing (Postman, REST Assured)
+[View Examples](../examples/testing-tools/)
+// Test Runners (Jest, Pytest, Mocha)
+// Assertion Libraries (Chai, Assert)
+// Mocking Frameworks (Sinon, Jest Mock)
+// Browser Automation (Selenium, Puppeteer)
+// API Testing (Postman, REST Assured)
 
 ### 7. Design Patterns
+[View Examples](../examples/design-patterns/)
 ```typescript
 // Singleton Pattern Example
 class TestConfig {
@@ -314,7 +320,7 @@ class TestCaseBuilder {
 }
 ```
 
-### Debugging Tips
+### 8. Debugging Tips
 1. Logging
 ```python
 import logging
